@@ -1,20 +1,18 @@
-from decimal import Decimal
-from endpoints.utils.dynamo_db import get_dynamodb_client
+from typing import List
+from endpoints.utils.dynamo_db import get_dynamodb_client, SHIPMENT_TABLE
 import json
 
 
-def load_movies(movies):
+def load_movies(shipments: List[dict]):
     dynamodb = get_dynamodb_client()
 
-    table = dynamodb.Table('Movies')
-    for movie in movies:
-        year = int(movie['year'])
-        title = movie['title']
-        print("Adding movie:", year, title)
-        table.put_item(Item=movie)
+    table = dynamodb.Table(SHIPMENT_TABLE)
+    for shipment in shipments:
+        print("Adding shipment with id", shipment['id'])
+        table.put_item(Item=shipment)
 
 
 if __name__ == '__main__':
     with open("data.json") as json_file:
-        movie_list = json.load(json_file, parse_float=Decimal)
-    load_movies(movie_list)
+        shipments = json.load(json_file)
+    load_movies(shipments)
