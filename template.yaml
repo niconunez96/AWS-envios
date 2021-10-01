@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: API envios
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  CreateShipment:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: endpoints/
+      Handler: create_shipment.handler
+      Runtime: python3.8
+      Events:
+        Create:
+          Type: Api
+          Properties:
+            Path: /shipments
+            Method: post
+  GetPendingShipments:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: endpoints/
+      Handler: get_shipments.handler
+      Runtime: python3.8
+      Events:
+        Create:
+          Type: Api
+          Properties:
+            Path: /shipments/pending
+            Method: get
+  MarkShipmentAsSent:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: endpoints/
+      Handler: mark_shipment_as_sent.handler
+      Runtime: python3.8
+      Events:
+        Create:
+          Type: Api
+          Properties:
+            Path: /shipments/{idEnvio}/sent
+            Method: put
