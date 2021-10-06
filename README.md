@@ -12,10 +12,11 @@ Requisitos:
 3. `pip install -r endpoints/requirements.txt`
 
 ## Setup
-1. Levantar dynamodb con docker `docker run -p 8000:8000 --network awslocal --name dynamodb amazon/dynamodb-local -jar DynamoDBLocal.jar -sharedDb`
-2. Crear el schema de base de datos con `python create_schema.py`
+1. Crear una red con docker `docker network create awslocal` 
+2. Levantar dynamodb con docker `docker run -p 8000:8000 --network awslocal --name dynamodb amazon/dynamodb-local -jar DynamoDBLocal.jar -sharedDb`
+3. Crear el schema de base de datos con `python create_schema.py`
     - Opcional: Para cargar unos datos de ejemplos se puede correr `python load_data.py`
-3. Levantar lambdas con `sam local start-api --docker-network awslocal`
+4. Levantar lambdas con `sam local start-api --docker-network awslocal`
 
 ## Uso
 
